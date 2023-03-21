@@ -4,10 +4,24 @@ import Stack from '@mui/material/Stack'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
+import CircularProgress from '@mui/material/CircularProgress'
+import Image from 'mui-image'
+import { useGetPostsQuery } from '../../utils/api/apiSlice'
 
-import laptopImage from '../../assets/images/laptopImage.png'
+function stringAvatar (name) {
+  return {
+    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`
+  }
+}
 
 export default function FeaturedItems () {
+  const {
+    data: items,
+    isLoading,
+    isSuccess,
+    isError
+  } = useGetPostsQuery()
+
   return (
     <Box
       sx={{
@@ -65,97 +79,131 @@ export default function FeaturedItems () {
           </Box>
         </Box>
       </Box>
-      <Box
-        sx={{
-          paddingTop: '40px'
-        }}
-      >
-        <Grid container spacing={4}>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
-            <Grid key={index} item xs={12} md={3}>
-              <Paper
-                sx={{
-                  border: '1px solid #D0D5DD',
-                  padding: '12px',
-                  borderRadius: '12px'
-                }}
-              >
-                <Stack spacing={2}>
-                  <Box>
-                    <img src={laptopImage} alt='' width='100%' height='100%' />
-                  </Box>
-                  <Stack spacing={2} direction='row'>
-                    <Avatar sx={{
-                      bgcolor: '#F2F4F7',
-                      color: '#475467',
-                      fontSize: '14px'
-                    }}
-                    >OP
-                    </Avatar>
+
+      {isError &&
+        <Box
+          sx={{
+            paddingTop: '300px',
+            display: 'flex',
+            justifyContent: 'center',
+            fontWeight: 700,
+            fontSize: '20px',
+            color: 'primary.main'
+          }}
+        >
+          Server Error, Please try again
+        </Box>}
+
+      {isLoading &&
+        <Box
+          sx={{
+            paddingTop: '300px',
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <CircularProgress />
+        </Box>}
+
+      {isSuccess &&
+        <Box
+          sx={{
+            paddingTop: '40px'
+          }}
+        >
+          <Grid container spacing={4}>
+            {items?.data?.map(({ bid, name, title, image }, index) => (
+              <Grid key={index} item xs={12} md={3}>
+                <Paper
+                  sx={{
+                    border: '1px solid #D0D5DD',
+                    padding: '12px',
+                    borderRadius: '12px'
+                  }}
+                >
+                  <Stack spacing={2}>
+                    <Box>
+                      <Image
+                        showLoading
+                        src={image}
+                        alt=''
+                        width='100%'
+                        height='100%'
+                      />
+                    </Box>
+                    <Stack spacing={2} direction='row'>
+                      <Avatar
+                        sx={{
+                          bgcolor: '#F2F4F7',
+                          color: '#475467',
+                          fontSize: '14px'
+                        }}
+                        {...stringAvatar(name)}
+                      />
+                      <Box
+                        sx={{
+                          alignSelf: 'center',
+                          color: 'primary.main',
+                          fontWeight: 400,
+                          fontSize: { md: '12px' }
+                        }}
+                      > {name}
+                        <span
+                          style={{ color: '#98A2B3' }}
+                        >(Highest Bidder)
+                        </span>
+                      </Box>
+                    </Stack>
                     <Box
                       sx={{
-                        alignSelf: 'center',
+                        fontWeight: 600,
                         color: 'primary.main',
-                        fontWeight: 400,
-                        fontSize: { md: '12px' }
+                        fontSize: '14px',
+                        width: '70%'
                       }}
-                    > Koray Okumus
-                      <span
-                        style={{ color: '#98A2B3' }}
-                      >(Highest Bidder)
-                      </span>
+                    >
+                      {title}
+                    </Box>
+                    <Stack direction='row' spacing={1}>
+                      <Box
+                        sx={{
+                          color: 'primary.tet'
+                        }}
+                      >
+                        Current Bid:
+                      </Box>
+                      <Box
+                        sx={{
+                          fontWeight: 700,
+                          color: 'primary.tet'
+                        }}
+                      >
+                        {bid}
+                      </Box>
+                    </Stack>
+                    <Box>
+                      <Button
+                        disableElevation
+                        sx={{
+                          backgroundColor: 'primary.sec',
+                          textTransform: 'none',
+                          width: '100%',
+                          borderRadius: '8px',
+                          '&:hover': {
+                            backgroundColor: 'primary.sec'
+                          }
+                        }}
+                        variant='contained'
+                      >
+                        Add to wishlist
+                      </Button>
                     </Box>
                   </Stack>
-                  <Box
-                    sx={{
-                      fontWeight: 600,
-                      color: 'primary.main',
-                      fontSize: '14px',
-                      width: '70%'
-                    }}
-                  >
-                    Phone 8 - 256GB, 4G LTE, Green (Refurbished)
-                  </Box>
-                  <Stack direction='row' spacing={1}>
-                    <Box
-                      sx={{
-                        color: 'primary.tet'
-                      }}
-                    >
-                      Current Bid:
-                    </Box>
-                    <Box
-                      sx={{
-                        fontWeight: 700,
-                        color: 'primary.tet'
-                      }}
-                    >
-                      ₦37,000
-                    </Box>
-                  </Stack>
-                  <Box>
-                    <Button
-                      disableElevation
-                      sx={{
-                        backgroundColor: 'primary.sec',
-                        textTransform: 'none',
-                        width: '100%',
-                        borderRadius: '8px',
-                        '&:hover': {
-                          backgroundColor: 'primary.sec'
-                        }
-                      }}
-                      variant='contained'
-                    >
-                      Add to wishlist
-                    </Button>
-                  </Box>
-                </Stack>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>}
     </Box>
   )
 }

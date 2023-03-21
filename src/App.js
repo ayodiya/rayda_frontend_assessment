@@ -3,11 +3,11 @@ import { ThemeProvider } from '@mui/material/styles'
 import { Route, Routes } from 'react-router-dom'
 import '@fontsource/ibm-plex-sans'
 
-import Navbar from './components/Navbar'
 import { theme } from './utils/theme'
 import './styles/app.css'
 
 // components imports
+import Navbar from './components/Navbar'
 import Home from './components/Home'
 
 function App () {

@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { ApiProvider } from '@reduxjs/toolkit/dist/query/react'
+import { apiSlice } from './utils/api/apiSlice'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <Router>
-      <App />
+      <ApiProvider api={apiSlice}>
+        <App />
+      </ApiProvider>
     </Router>
   </React.StrictMode>
 )
