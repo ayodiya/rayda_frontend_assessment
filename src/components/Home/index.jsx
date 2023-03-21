@@ -1,5 +1,6 @@
 import Container from '@mui/material/Container'
 import HeroSection from './HeroSection'
+import FeaturedItems from './FeaturedItems'
 
 export default function Home () {
   return (
@@ -10,6 +11,7 @@ export default function Home () {
       maxWidth='lg'
     >
       <HeroSection />
+      <FeaturedItems />
     </Container>
   )
 }
