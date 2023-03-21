@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import CircularProgress from '@mui/material/CircularProgress'
 import Image from 'mui-image'
-import { useGetPostsQuery } from '../../utils/api/apiSlice'
+import { useGetProductsQuery } from '../../utils/api/apiSlice'
 
 function stringAvatar (name) {
   return {
@@ -20,7 +20,7 @@ export default function FeaturedItems () {
     isLoading,
     isSuccess,
     isError
-  } = useGetPostsQuery()
+  } = useGetProductsQuery()
 
   return (
     <Box
@@ -158,8 +158,8 @@ export default function FeaturedItems () {
                       sx={{
                         fontWeight: 600,
                         color: 'primary.main',
-                        fontSize: '14px',
-                        width: '70%'
+                        fontSize: '12px',
+                        width: '90%'
                       }}
                     >
                       {title}
