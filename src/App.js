@@ -1,12 +1,14 @@
-import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import '@fontsource/ibm-plex-sans'
 
 import Navbar from './components/Navbar'
 import { theme } from './utils/theme'
 import './styles/app.css'
+
+// components imports
+import Home from './components/Home'
 
 function App () {
   return (
@@ -14,9 +16,10 @@ function App () {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <Navbar />
-        {/* <Routes>
-              <Route exact path='/' element={<AdminHome />} />
-            </Routes> */}
+        <Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route exact path='*' element={<Home />} />
+        </Routes>
       </ThemeProvider>
     </>
   )
